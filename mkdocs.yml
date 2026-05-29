@@ -1,6 +1,6 @@
-site_name: Domain as Object - Architecture (DOA)
-site_description: "Architecture concepts and specification such as CCC, RPUs, and Reactors."
-repo_url: https://github.com/ricofritzsche/dao-architecture
+site_name: Architecture Specs
+site_description: "Specifications and examples for command context consistency, request processing units, and related architecture concepts."
+repo_url: https://github.com/ricofritzsche/architecture-specs
 repo_name: ricofritzsche/architecture-specs
 
 theme:
