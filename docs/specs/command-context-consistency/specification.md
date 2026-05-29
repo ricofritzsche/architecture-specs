@@ -17,7 +17,7 @@ query(event_query) -> query_result
 append(new_events) -> append_result
 
 append_if(new_events, context_query, expected_context_version) -> append_result
-````
+```
 
 ## Facts
 
