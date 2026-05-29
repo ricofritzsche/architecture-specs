@@ -1,0 +1,27 @@
+site_name: Architecture Specs
+site_description: "Specifications and examples for command context consistency, request processing units, and related architecture concepts."
+repo_url: https://github.com/ricofritzsche/architecture-specs
+repo_name: ricofritzsche/architecture-specs
+
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - Specifications:
+      - Overview: specs/index.md
+      - Command Context Consistency:
+          - Overview: specs/command-context-consistency/index.md
+          - Specification: specs/command-context-consistency/specification.md
+          - Concepts: specs/command-context-consistency/concepts.md
+          - Examples: specs/command-context-consistency/examples.md
+      - Request Processing Units: specs/request-processing-units/index.md
+      - Reactors: specs/reactors/index.md
+  - Examples:
+      - Overview: examples/index.md
+      - Command Context Consistency:
+          - Overview: examples/command-context-consistency/index.md
+          - Tool Rental: examples/command-context-consistency/tool-rental.md
+  - Reference:
+      - Overview: reference/index.md
+      - Terminology: reference/terminology.md
