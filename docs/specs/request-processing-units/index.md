@@ -54,9 +54,9 @@ Other code depends on the request and response contract, not on the internal imp
 
 An RPU is a self-contained capability processor with an internal Functional Core / Imperative Shell structure.
 
-The Imperative Shell handles state access and persistence.
+![RPU internal Functional Core / Imperative Shell structure](../../assets/diagrams/rpu-fcis.png)
 
-The Functional Core builds the decision context and makes the decision.
+The request enters the RPU through the Imperative Shell. The shell loads the context and passes the relevant data into the Functional Core. The Functional Core builds the decision context and decides. The shell persists the consequences and returns the response.
 
 ```mermaid
 flowchart TB
