@@ -17,6 +17,7 @@ nav:
           - Examples: specs/command-context-consistency/examples.md
       - Request Processing Units: specs/request-processing-units/index.md
       - Reactors: specs/reactors/index.md
+      - Providers: specs/providers/index.md
   - Examples:
       - Overview: examples/index.md
       - Command Context Consistency:
