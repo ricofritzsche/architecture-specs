@@ -10,10 +10,8 @@ process(request) -> response
 
 The request enters the RPU. The response leaves the RPU. Everything else is internal.
 
-```mermaid
-flowchart LR
-    Request["Request"] --> RPU["RPU<br/>one domain capability"]
-    RPU --> Response["Response"]
+```text
+[ Domain Request ]  →  ( RPU / one domain capability )  →  [ Domain Response ]
 ```
 
 ## Domain Capability
@@ -34,17 +32,7 @@ The public surface of an RPU is its request and response.
 
 The caller does not see the internal state, persistence mechanism, decision structure, or implementation files.
 
-```mermaid
-flowchart TB
-    Caller["Caller"] --> Request["Request"]
-    Request --> Process["process(request)"]
-    Process --> Response["Response"]
-    Response --> Caller
-
-    subgraph RPU["RPU boundary"]
-        Process
-    end
-```
+![RPU Process State Interaction](../../assets/diagrams/rpu-process-state-interaction.png)
 
 The RPU boundary is the coordination boundary.
 
@@ -58,33 +46,13 @@ An RPU is a self-contained capability processor with an internal Functional Core
 
 The request enters the RPU through the Imperative Shell. The shell loads the context and passes the relevant data into the Functional Core. The Functional Core builds the decision context and decides. The shell persists the consequences and returns the response.
 
-```mermaid
-flowchart TB
-    Request["Request"] --> Load["Load context<br/>(Imperative Shell)"]
-    Load --> Build["Build decision context<br/>(Functional Core)"]
-    Build --> Decide["Decide<br/>(Functional Core)"]
-    Decide --> Persist["Persist consequences<br/>(Imperative Shell)"]
-    Persist --> Response["Response"]
-```
-
-The RPU as a whole is not pure.
-
-The decision part should be deterministic and easy to test.
-
-The shell part connects the decision to persisted state and technical execution.
+The RPU as a whole is not pure. The decision part should be deterministic and easy to test. The shell part connects the decision to persisted state and technical execution.
 
 ## Command RPU
 
 A command RPU processes a request that can change the domain.
 
-```mermaid
-flowchart LR
-    Request["Command request"] --> Load["Load relevant context"]
-    Load --> Decide["Decide"]
-    Decide --> Consequences["Produce consequences"]
-    Consequences --> Persist["Persist consequences"]
-    Persist --> Response["Command response"]
-```
+![Command RPU](../../assets/diagrams/command-rpu.png)
 
 A command RPU should contain everything needed for that command capability.
 
@@ -96,12 +64,7 @@ It owns the complete processing path for its capability.
 
 A query RPU processes a request that reads from the domain.
 
-```mermaid
-flowchart LR
-    Request["Query request"] --> Load["Load relevant state or facts"]
-    Load --> Transform["Build result"]
-    Transform --> Response["Query response"]
-```
+![Query RPU](../../assets/diagrams/query-rpu.png)
 
 A query RPU returns the result needed by the caller.
 
@@ -119,16 +82,7 @@ It does not depend on other RPUs.
 
 Its internal state access can be replaced for tests.
 
-```mermaid
-flowchart TB
-    RPU1["RPU A"]
-    RPU2["RPU B"]
-    RPU3["RPU C"]
-
-    RPU1 -. no dependency .- RPU2
-    RPU2 -. no dependency .- RPU3
-    RPU1 -. no dependency .- RPU3
-```
+![No dependencies between RPUs](../../assets/diagrams/independent-rpus.png)
 
 This independence allows different capabilities to be developed in parallel without sharing internal code or state.
 
@@ -139,7 +93,7 @@ An RPU is:
 - one domain capability
 - one `process(request) -> response` contract
 - self-contained
-- independent from other RPUs
+- independent of other RPUs
 - internally structured as Functional Core / Imperative Shell
 - testable without a user interface
 - focused on domain behavior, not technology
