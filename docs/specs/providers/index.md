@@ -1,14 +1,14 @@
 # Providers
 
-A Provider gives access to an external capability outside the domain.
+A Provider gives access to an external resource or capability outside the domain.
 
 It hides technical access behind a small callable surface.
 
-A Provider is used when an interaction needs something the domain does not own.
+In this documentation, Provider means an external provider. Domain State Provider is a special case and will be documented separately.
 
 ## External Capability
 
-A Provider represents an external capability.
+A Provider represents something the domain does not own.
 
 Examples:
 
@@ -17,17 +17,20 @@ Examples:
 - payment processing
 - notifications
 - file storage
+- time
+- random numbers
+- communication
 - third-party APIs
 
 The Provider owns the technical access to that capability.
 
-The domain does not own it.
+The domain does not own the external capability.
 
 ## Provider Boundary
 
-A Provider may know about protocols, credentials, APIs, network calls, retries, rate limits, or external data formats.
+A Provider may know about protocols, credentials, APIs, network calls, retries, rate limits, external data formats, or other technical details.
 
-The code that uses a Provider should not need to know those details.
+Code that uses a Provider should not need to know those details.
 
 The Provider exposes the external capability through a clear boundary.
 
@@ -51,27 +54,57 @@ The important part is not the method name.
 
 The important part is that external access is separated from domain decisions.
 
+## Relationship to RPUs
+
+An RPU owns one domain capability.
+
+An RPU may use a Provider directly when the external capability is part of that one domain capability's processing.
+
+In that case, the Provider belongs to the RPU's imperative shell.
+
+The RPU still owns the domain capability.
+
+The Provider only supplies external access.
+
+The Provider does not decide the domain behavior.
+
+A Provider call inside an RPU must not become hidden cross-capability orchestration.
+
 ## Relationship to Reactors
 
 A Reactor may coordinate RPUs and Providers.
 
-The Reactor controls the interaction flow.
+Use a Reactor when an interaction combines multiple domain capabilities, multiple external operations, or a sequence of steps around one interaction.
 
-The Provider performs the external operation.
+The Reactor controls the flow.
 
 The RPU owns the domain capability.
 
-The Provider does not contain domain logic.
+The Provider performs the external operation.
 
-## Relationship to RPUs
+The Reactor does not contain domain decisions.
 
-An RPU owns a domain capability.
+## Direct Use or Reactor
 
-A Provider owns access to an external capability.
+A Provider does not automatically require a Reactor.
 
-If a domain decision is needed, it belongs in an RPU.
+Use the Provider directly inside an RPU when the external capability is needed to process that single domain capability.
 
-If external access is needed, it belongs behind a Provider.
+Use a Reactor when the interaction coordinates an RPU with external work around the domain capability.
+
+Examples:
+
+RPU uses Provider directly
+= the Provider is needed for one capability decision or completion
+
+Reactor uses Provider
+= the interaction coordinates domain behavior and external effects
+
+The boundary is the capability.
+
+If the Provider is needed inside one capability, it can be used by the RPU.
+
+If the Provider is part of a broader interaction flow, use a Reactor.
 
 ## Testability
 
@@ -87,9 +120,13 @@ Provider implementation tests can separately verify the real external integratio
 
 A Provider is:
 
-* a boundary to an external capability
-* outside the domain
+* a boundary to an external resource or capability
+* outside the domain state
 * technical rather than domain-owning
-* replaceable for tests
 * callable through a small public surface
+* replaceable for tests
 * free of domain decisions
+
+An RPU may use a Provider directly when the Provider is needed for one domain capability.
+
+A Reactor coordinates Providers when an interaction spans multiple capabilities or external operations.
