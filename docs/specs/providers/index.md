@@ -70,6 +70,8 @@ The Provider does not decide the domain behavior.
 
 A Provider call inside an RPU must not become hidden cross-capability orchestration.
 
+![Providers and RPUs](../../assets/diagrams/rpus-providers.png)
+
 ## Relationship to Reactors
 
 A Reactor may coordinate RPUs and Providers.
@@ -83,6 +85,8 @@ The RPU owns the domain capability.
 The Provider performs the external operation.
 
 The Reactor does not contain domain decisions.
+
+![Provider in a Reactor](../../assets/diagrams/reactor-flow-providers.png)
 
 ## Direct Use or Reactor
 

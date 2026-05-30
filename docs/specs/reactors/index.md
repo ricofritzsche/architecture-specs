@@ -51,6 +51,8 @@ The exact steps depend on the interaction.
 
 The important rule is that the Reactor coordinates the flow. It does not own the domain behavior of the individual steps.
 
+![Providers and RPUs](../../assets/diagrams/reactor-flow-providers.png)
+
 ## Domain Logic
 
 A Reactor must not contain domain logic.
